@@ -44,7 +44,7 @@ export class SkillSlotHUD {
   update(state: PlayerSkillSlotState): void {
     this.updateSlot('light', this.withStatus('左键 轻击', state.lightCooldownMs, !state.canLightAttack));
     this.updateSlot('heavy', this.withStatus('右键 重击', state.heavyCooldownMs, !state.canHeavyAttack));
-    this.updateSlot('q', this.withStatus(this.slots.get('q')?.baseLabel ?? 'Q 五行术', state.qCooldownMs, !state.canCastQ));
+    this.updateSlot('q', this.withStatus(this.slots.get('q')?.baseLabel ?? 'Q 五行术法', state.qCooldownMs, !state.canCastQ));
     this.updateSlot('dodge', this.withStatus('Space 闪避', state.dodgeCooldownMs, !state.canDodge));
     this.updateSlot(
       'heal',

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { ElementType } from '../types/GameTypes';
+import { SceneDepth } from '../utils/DepthUtils';
 import type { Damageable, DamageInput, StatusEffectType } from './CombatTypes';
 
 export interface SkillProjectileConfig {
@@ -45,7 +46,7 @@ export class SkillProjectile extends Phaser.GameObjects.Container {
     this.damageInput = config.damageInput;
     this.velocity = new Phaser.Math.Vector2(Math.cos(config.direction), Math.sin(config.direction)).scale(config.speed);
 
-    this.setDepth(52);
+    this.setDepth(SceneDepth.Effects);
     this.setRotation(config.direction);
     this.add(this.drawSkill(config));
     scene.add.existing(this);

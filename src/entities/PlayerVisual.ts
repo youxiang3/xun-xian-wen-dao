@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { SceneDepth } from '../utils/DepthUtils';
 
 export class PlayerVisual extends Phaser.GameObjects.Container {
   private readonly baseScale = 1.12;
@@ -37,7 +38,7 @@ export class PlayerVisual extends Phaser.GameObjects.Container {
 
   playDodgeTrail(direction: Phaser.Math.Vector2): void {
     const trail = this.scene.add.graphics();
-    trail.setDepth(47);
+    trail.setDepth(SceneDepth.Effects);
     trail.fillStyle(this.elementColor, 0.18);
     trail.fillEllipse(this.parentContainer.x - direction.x * 16, this.parentContainer.y - direction.y * 16 + 14, 42, 18);
     this.scene.tweens.add({
@@ -50,7 +51,7 @@ export class PlayerVisual extends Phaser.GameObjects.Container {
 
   playHealPulse(): void {
     const pulse = this.scene.add.graphics();
-    pulse.setDepth(49);
+    pulse.setDepth(SceneDepth.Effects);
     pulse.lineStyle(2, this.elementColor, 0.42);
     pulse.strokeCircle(this.parentContainer.x, this.parentContainer.y + 2, 24);
     this.scene.tweens.add({
@@ -66,7 +67,7 @@ export class PlayerVisual extends Phaser.GameObjects.Container {
   playHurtFlash(): void {
     this.scene.tweens.killTweensOf(this);
     this.setAlpha(0.72);
-    const flash = this.scene.add.circle(this.parentContainer.x, this.parentContainer.y, 30, 0xff6f61, 0.18).setDepth(60);
+    const flash = this.scene.add.circle(this.parentContainer.x, this.parentContainer.y, 30, 0xff6f61, 0.18).setDepth(SceneDepth.Effects);
     this.scene.time.delayedCall(110, () => {
       this.setAlpha(1);
       flash.destroy();

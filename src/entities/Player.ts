@@ -267,7 +267,7 @@ export class Player extends Phaser.GameObjects.Container {
   }
 
   private tryCastQ(): void {
-    if (!this.canActByCooldown('q', '五行攻击术冷却中')) return;
+    if (!this.canActByCooldown('q', '五行术法冷却中')) return;
     if (this.stats.mp < this.initialAttackSkill.mpCost) {
       this.showHint('灵力不足');
       return;

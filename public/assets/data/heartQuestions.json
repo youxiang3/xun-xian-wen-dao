@@ -1,0 +1,562 @@
+{
+  "version": "0.5",
+  "source": "PRD v0.5",
+  "description": "《寻仙问道：悟道山试炼》五问定心固定配置。用于问心开局、灵根判定、命格、体魄和初始五行术法结果计算。",
+  "flow": {
+    "totalQuestions": 5,
+    "allowBacktrack": false,
+    "allowReroll": false,
+    "resultAfterAllAnswered": true
+  },
+  "elements": {
+    "metal": "金",
+    "wood": "木",
+    "water": "水",
+    "fire": "火",
+    "earth": "土"
+  },
+  "spells": {
+    "metal": {
+      "name": "金芒刺",
+      "type": "五行基础攻击术"
+    },
+    "wood": {
+      "name": "青藤击",
+      "type": "五行基础攻击术"
+    },
+    "water": {
+      "name": "寒露刃",
+      "type": "五行基础攻击术"
+    },
+    "fire": {
+      "name": "火星诀",
+      "type": "五行基础攻击术"
+    },
+    "earth": {
+      "name": "碎土刃",
+      "type": "五行基础攻击术"
+    }
+  },
+  "rootQualities": {
+    "celestial": "天灵根",
+    "pure": "纯灵根",
+    "dual": "双灵根",
+    "mixed": "杂灵根",
+    "mortal": "凡灵根"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "order": 1,
+      "title": "第一问：问道心",
+      "subtitle": "仙门之前，先问本心。",
+      "questionText": "若你立于仙门之前，身后是凡尘万事，身前是未知大道，你最先问自己的是什么？",
+      "options": [
+        {
+          "id": "A",
+          "text": "我为何求道？",
+          "element": "water",
+          "fate": "凡骨问道",
+          "body": "悟性",
+          "rootSignal": "道心",
+          "resonance": {
+            "tags": [
+              "dao"
+            ],
+            "tendency": "道心 / 悟性",
+            "effects": [
+              "灵力上限",
+              "术法理解",
+              "命格偏凡骨问道"
+            ],
+            "note": "PRD 将该选项标为 dao 特殊标签；element 字段仅用于满足固定枚举结构。"
+          }
+        },
+        {
+          "id": "B",
+          "text": "我能否护住想护之人？",
+          "element": "wood",
+          "fate": "青木长生",
+          "body": "仁心",
+          "rootSignal": "守护",
+          "resonance": {
+            "tags": [
+              "wood"
+            ],
+            "tendency": "守护 / 仁心",
+            "effects": [
+              "气血",
+              "回血效果",
+              "命格偏青木长生"
+            ]
+          }
+        },
+        {
+          "id": "C",
+          "text": "我是否敢踏过此门？",
+          "element": "metal",
+          "fate": "孤锋入世",
+          "body": "勇决",
+          "rootSignal": "锋芒",
+          "resonance": {
+            "tags": [
+              "metal",
+              "fire"
+            ],
+            "tendency": "勇决 / 锋芒",
+            "effects": [
+              "攻击",
+              "重击",
+              "命格偏孤锋入世或烈火破妄"
+            ]
+          }
+        },
+        {
+          "id": "D",
+          "text": "我能否看破眼前虚妄？",
+          "element": "water",
+          "fate": "流水观心",
+          "body": "洞察",
+          "rootSignal": "身法",
+          "resonance": {
+            "tags": [
+              "water"
+            ],
+            "tendency": "洞察 / 身法",
+            "effects": [
+              "闪避",
+              "灵力回复",
+              "命格偏流水观心"
+            ]
+          }
+        },
+        {
+          "id": "E",
+          "text": "我能否在万难中不退半步？",
+          "element": "earth",
+          "fate": "厚土守心",
+          "body": "坚韧",
+          "rootSignal": "承压",
+          "resonance": {
+            "tags": [
+              "earth"
+            ],
+            "tendency": "坚韧 / 承压",
+            "effects": [
+              "体魄",
+              "防御",
+              "命格偏厚土守心"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "order": 2,
+      "title": "第二问：问灵根",
+      "subtitle": "五行流转，主灵根由此而定。",
+      "questionText": "五行流转，万法归源。若天地只回应你一缕灵息，那会是什么？",
+      "options": [
+        {
+          "id": "A",
+          "text": "金：锋锐如剑，破障开路",
+          "element": "metal",
+          "fate": "孤锋入世",
+          "body": "锋锐",
+          "rootSignal": "mainElement:metal",
+          "resonance": {
+            "tags": [
+              "metal"
+            ],
+            "tendency": "锐利 / 破甲 / 武器附魔",
+            "setsMainElement": true
+          }
+        },
+        {
+          "id": "B",
+          "text": "木：生机不绝，愈战愈生",
+          "element": "wood",
+          "fate": "青木长生",
+          "body": "生发",
+          "rootSignal": "mainElement:wood",
+          "resonance": {
+            "tags": [
+              "wood"
+            ],
+            "tendency": "生长 / 缠绕 / 回复 / 延展",
+            "setsMainElement": true
+          }
+        },
+        {
+          "id": "C",
+          "text": "水：随势而动，避实击虚",
+          "element": "water",
+          "fate": "流水观心",
+          "body": "流动",
+          "rootSignal": "mainElement:water",
+          "resonance": {
+            "tags": [
+              "water"
+            ],
+            "tendency": "迟缓 / 流动 / 冷却 / 阻滞",
+            "setsMainElement": true
+          }
+        },
+        {
+          "id": "D",
+          "text": "火：一念燃尽，爆发破敌",
+          "element": "fire",
+          "fate": "烈火破妄",
+          "body": "爆发",
+          "rootSignal": "mainElement:fire",
+          "resonance": {
+            "tags": [
+              "fire"
+            ],
+            "tendency": "燃烧 / 爆发 / 持续伤害",
+            "setsMainElement": true
+          }
+        },
+        {
+          "id": "E",
+          "text": "土：厚重如山，守中反击",
+          "element": "earth",
+          "fate": "厚土守心",
+          "body": "厚重",
+          "rootSignal": "mainElement:earth",
+          "resonance": {
+            "tags": [
+              "earth"
+            ],
+            "tendency": "防御 / 护体 / 震地 / 压制",
+            "setsMainElement": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "order": 3,
+      "title": "第三问：问凡尘",
+      "subtitle": "十六载凡尘，最难放下者最见命格。",
+      "questionText": "十六载凡尘中，你最难放下的是什么？",
+      "options": [
+        {
+          "id": "A",
+          "text": "一饭一衣之恩",
+          "element": "wood",
+          "fate": "青木长生",
+          "body": "仁心",
+          "rootSignal": "wood",
+          "resonance": {
+            "tags": [
+              "wood"
+            ],
+            "tendency": "木 / 仁心",
+            "effects": [
+              "回血",
+              "续航",
+              "守护"
+            ]
+          }
+        },
+        {
+          "id": "B",
+          "text": "一败一辱之恨",
+          "element": "fire",
+          "fate": "烈火破妄",
+          "body": "执念",
+          "rootSignal": "fire",
+          "resonance": {
+            "tags": [
+              "fire"
+            ],
+            "tendency": "火 / 执念",
+            "effects": [
+              "爆发",
+              "重击",
+              "燃烧"
+            ]
+          }
+        },
+        {
+          "id": "C",
+          "text": "一句未问出口的答案",
+          "element": "water",
+          "fate": "流水观心",
+          "body": "洞察",
+          "rootSignal": "water",
+          "resonance": {
+            "tags": [
+              "water"
+            ],
+            "tendency": "水 / 洞察",
+            "effects": [
+              "灵力",
+              "冷却",
+              "节奏"
+            ]
+          }
+        },
+        {
+          "id": "D",
+          "text": "一条无人敢走的路",
+          "element": "metal",
+          "fate": "孤锋入世",
+          "body": "孤勇",
+          "rootSignal": "metal",
+          "resonance": {
+            "tags": [
+              "metal"
+            ],
+            "tendency": "金 / 孤勇",
+            "effects": [
+              "轻击",
+              "破甲",
+              "锋锐"
+            ]
+          }
+        },
+        {
+          "id": "E",
+          "text": "一座必须跨过的山",
+          "element": "earth",
+          "fate": "厚土守心",
+          "body": "坚韧",
+          "rootSignal": "earth",
+          "resonance": {
+            "tags": [
+              "earth"
+            ],
+            "tendency": "土 / 坚韧",
+            "effects": [
+              "气血",
+              "防御",
+              "韧性"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "order": 4,
+      "title": "第四问：问应敌",
+      "subtitle": "石傀逼近，试你临战之心。",
+      "questionText": "若试炼石傀自土行法阵中苏醒，踏碎石阶向你逼近，而你手中只有一柄未开锋的木剑，你会如何应对？",
+      "options": [
+        {
+          "id": "A",
+          "text": "先退一步，看清它的破绽",
+          "element": "water",
+          "fate": "流水观心",
+          "body": "身法",
+          "rootSignal": "water",
+          "resonance": {
+            "tags": [
+              "water"
+            ],
+            "tendency": "水 / 身法",
+            "effects": [
+              "闪避",
+              "冷却",
+              "观察破绽"
+            ]
+          }
+        },
+        {
+          "id": "B",
+          "text": "迎面斩去，不给它近身机会",
+          "element": "metal",
+          "fate": "孤锋入世",
+          "body": "轻击",
+          "rootSignal": "metal",
+          "resonance": {
+            "tags": [
+              "metal"
+            ],
+            "tendency": "金 / 轻击",
+            "effects": [
+              "轻击",
+              "武器锋利",
+              "破甲"
+            ]
+          }
+        },
+        {
+          "id": "C",
+          "text": "蓄力一击，赌它接不住",
+          "element": "fire",
+          "fate": "烈火破妄",
+          "body": "重击",
+          "rootSignal": "fire",
+          "resonance": {
+            "tags": [
+              "fire"
+            ],
+            "tendency": "火 / 重击",
+            "effects": [
+              "重击",
+              "爆发",
+              "燃烧"
+            ]
+          }
+        },
+        {
+          "id": "D",
+          "text": "引灵入剑，以术法破阵",
+          "element": "water",
+          "fate": "凡骨问道",
+          "body": "灵力",
+          "rootSignal": "primary",
+          "resonance": {
+            "tags": [
+              "primary"
+            ],
+            "tendency": "术法 / 灵力",
+            "effects": [
+              "Q 技能",
+              "灵气外放",
+              "附魔效率"
+            ],
+            "matchesSelectedMainElement": true,
+            "note": "PRD 将该选项标为 primary，表示与第二问选出的主灵根共鸣；element 字段仅用于满足固定枚举结构。"
+          }
+        },
+        {
+          "id": "E",
+          "text": "稳住气息，以身法防守",
+          "element": "earth",
+          "fate": "厚土守心",
+          "body": "防守",
+          "rootSignal": "earth",
+          "resonance": {
+            "tags": [
+              "earth"
+            ],
+            "tendency": "土 / 防守",
+            "effects": [
+              "防御",
+              "护体",
+              "受击容错"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "order": 5,
+      "title": "第五问：问入世",
+      "subtitle": "愿以何物，换一条仙途。",
+      "questionText": "若今日之后，你再不能做一个普通凡人，你愿以何物换一条仙途？",
+      "options": [
+        {
+          "id": "A",
+          "text": "以安稳换大道",
+          "element": "water",
+          "fate": "流水观心 / 凡骨问道",
+          "body": "观心",
+          "rootSignal": "water",
+          "resonance": {
+            "tags": [
+              "water",
+              "dao"
+            ],
+            "tendency": "求道 / 观心",
+            "fateBias": [
+              "流水观心",
+              "凡骨问道"
+            ]
+          }
+        },
+        {
+          "id": "B",
+          "text": "以恐惧换锋芒",
+          "element": "metal",
+          "fate": "孤锋入世",
+          "body": "勇决",
+          "rootSignal": "metal",
+          "resonance": {
+            "tags": [
+              "metal"
+            ],
+            "tendency": "金 / 勇决",
+            "fateBias": [
+              "孤锋入世"
+            ]
+          }
+        },
+        {
+          "id": "C",
+          "text": "以旧梦换新生",
+          "element": "wood",
+          "fate": "青木长生",
+          "body": "蜕变",
+          "rootSignal": "wood",
+          "resonance": {
+            "tags": [
+              "wood"
+            ],
+            "tendency": "木 / 蜕变",
+            "fateBias": [
+              "青木长生"
+            ]
+          }
+        },
+        {
+          "id": "D",
+          "text": "以执念换烈火",
+          "element": "fire",
+          "fate": "烈火破妄",
+          "body": "执念",
+          "rootSignal": "fire",
+          "resonance": {
+            "tags": [
+              "fire"
+            ],
+            "tendency": "火 / 破妄",
+            "fateBias": [
+              "烈火破妄"
+            ]
+          }
+        },
+        {
+          "id": "E",
+          "text": "以一身凡骨，问万丈仙门",
+          "element": "earth",
+          "fate": "厚土守心 / 凡骨问道",
+          "body": "坚韧",
+          "rootSignal": "earth",
+          "resonance": {
+            "tags": [
+              "earth",
+              "dao"
+            ],
+            "tendency": "土 / 坚韧 / 主线正统",
+            "fateBias": [
+              "厚土守心",
+              "凡骨问道"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resultRules": {
+    "mainElementRule": "第二问决定主灵根倾向，其余问题影响共鸣度与结果修正。",
+    "resonanceRule": "五问答案共同影响五行共鸣度。",
+    "rootQualityRule": "根据主灵根倾向、共鸣集中度与回答一致性判定天灵根、纯灵根、双灵根、杂灵根或凡灵根。",
+    "fateRule": "根据选项中的 fate 字段汇总命格倾向。",
+    "bodyRule": "根据选项中的 body 字段汇总体魄倾向。",
+    "spellRule": "初始 Q 技能为主灵根对应的五行基础攻击术。"
+  },
+  "resultPreviewLabels": {
+    "mainElement": "主灵根",
+    "rootQuality": "灵根品质",
+    "fate": "命格",
+    "body": "体魄",
+    "initialSpell": "初始术法"
+  }
+}

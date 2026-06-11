@@ -1,0 +1,241 @@
+{
+  "version": "0.5",
+  "source": "PRD v0.5, based on v0.4.1 combat supplement",
+  "description": "《寻仙问道：悟道山试炼》战斗数值集中配置。后续战斗模块必须逐步引用此文件，禁止继续扩散硬编码数值。",
+  "playerBase": {
+    "hp": 100,
+    "mp": 60,
+    "stamina": 100,
+    "lightAttackDamage": 10,
+    "heavyAttackDamage": 22,
+    "spellDamage": 18,
+    "healCount": 3,
+    "healAmount": 35,
+    "dodgeInvincibleDuration": 0.2,
+    "dodgeCooldown": 1.2,
+    "dodgeStaminaCost": 20,
+    "lightAttackStaminaCost": 0,
+    "heavyAttackStaminaCost": 15,
+    "qManaCost": 8,
+    "qCooldown": 5.0,
+    "qEnchantDuration": 3.0,
+    "hitStunDuration": 0.25,
+    "hitKnockbackBoss": 8,
+    "hitKnockbackNormal": 3,
+    "hitInvincibleAfterStun": 0.05,
+    "attackMoveSpeedRatio_light": 0.3,
+    "attackMoveSpeedRatio_heavy": 0.0,
+    "attackMoveSpeedRatio_q": 1.0,
+    "healLockDuration": 0.5
+  },
+  "elementModifiers": {
+    "metal": {
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.00,
+      "lightAttackMultiplier": 1.10,
+      "heavyAttackMultiplier": 1.00,
+      "spellMultiplier": 1.00,
+      "healMultiplier": 1.00,
+      "dodgeCooldownMultiplier": 1.00,
+      "enchantDescription": "锋锐破甲"
+    },
+    "wood": {
+      "hpMultiplier": 1.05,
+      "mpMultiplier": 1.00,
+      "lightAttackMultiplier": 1.00,
+      "heavyAttackMultiplier": 1.00,
+      "spellMultiplier": 1.00,
+      "healMultiplier": 1.15,
+      "dodgeCooldownMultiplier": 1.00,
+      "enchantDescription": "生长缠绕"
+    },
+    "water": {
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.10,
+      "lightAttackMultiplier": 1.00,
+      "heavyAttackMultiplier": 1.00,
+      "spellMultiplier": 1.00,
+      "healMultiplier": 1.00,
+      "dodgeCooldownMultiplier": 0.90,
+      "enchantDescription": "迟缓流动"
+    },
+    "fire": {
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.00,
+      "lightAttackMultiplier": 1.00,
+      "heavyAttackMultiplier": 1.10,
+      "spellMultiplier": 1.05,
+      "healMultiplier": 1.00,
+      "dodgeCooldownMultiplier": 1.00,
+      "enchantDescription": "爆发燃烧"
+    },
+    "earth": {
+      "hpMultiplier": 1.10,
+      "mpMultiplier": 1.00,
+      "lightAttackMultiplier": 1.00,
+      "heavyAttackMultiplier": 1.00,
+      "spellMultiplier": 1.00,
+      "healMultiplier": 1.00,
+      "dodgeCooldownMultiplier": 1.00,
+      "enchantDescription": "护体震荡"
+    }
+  },
+  "rootQualityModifiers": {
+    "celestial": {
+      "label": "天灵根",
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.17,
+      "spellMultiplier": 1.15,
+      "enchantMultiplier": 1.20
+    },
+    "pure": {
+      "label": "纯灵根",
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.08,
+      "spellMultiplier": 1.10,
+      "enchantMultiplier": 1.12
+    },
+    "dual": {
+      "label": "双灵根",
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 1.05,
+      "spellMultiplier": 1.06,
+      "enchantMultiplier": 1.00,
+      "reactionEfficiencyMultiplier": 1.15
+    },
+    "mixed": {
+      "label": "杂灵根",
+      "hpMultiplier": 1.00,
+      "mpMultiplier": 0.95,
+      "spellMultiplier": 1.00,
+      "enchantMultiplier": 1.00
+    },
+    "mortal": {
+      "label": "凡灵根",
+      "hpMultiplier": 1.05,
+      "mpMultiplier": 1.00,
+      "spellMultiplier": 1.00,
+      "enchantMultiplier": 1.00,
+      "staminaBonus": 5
+    }
+  },
+  "stonePuppet": {
+    "name": "土行石傀",
+    "hp": 35,
+    "attackDamage": 8,
+    "moveSpeedRatio": 0.4,
+    "attackWindup": 0.6,
+    "attackCooldown": 2.0,
+    "countPerWave": 3,
+    "contactDamage": false
+  },
+  "boss": {
+    "name": "悟道山试炼守卫",
+    "hp": 350,
+    "moveSpeedRatio": 0.5,
+    "phaseThreshold": 0.5,
+    "sweepAttack": {
+      "damage": 18,
+      "windup": 0.35,
+      "rangeType": "cone",
+      "angle": 90,
+      "radius": 120,
+      "recoveryDuration": 0.5,
+      "cooldown": 1.5
+    },
+    "smashAttack": {
+      "damage": 30,
+      "windup": 0.65,
+      "rangeType": "rect",
+      "width": 80,
+      "length": 150,
+      "recoveryDuration": 0.8,
+      "cooldown": 3.0
+    },
+    "redCircleQuake": {
+      "damage": 28,
+      "warningDuration": 0.9,
+      "radius": 100,
+      "recoveryDuration": 0.7,
+      "cooldown": 6.0,
+      "phaseTwoProbabilityBoost": 1.5
+    },
+    "mountainSuppress": {
+      "damage": 38,
+      "warningDuration": 1.2,
+      "radius": 140,
+      "recoveryDuration": 1.0,
+      "cooldown": 12.0,
+      "maxPerPhaseTwo30s": 1,
+      "unlockAtPhase": 2
+    }
+  },
+  "bossStagger": {
+    "idle_staggerDuration": 0.2,
+    "walk_staggerDuration": 0.2,
+    "sweep_superArmor": true,
+    "smash_superArmor": true,
+    "redCircle_superArmor": true,
+    "mountainSuppress_superArmor": true,
+    "recovery_superArmor": false,
+    "phaseTransitionInvincible": 1.0
+  },
+  "elementReactions": {
+    "fire_wood": {
+      "status": "implemented",
+      "condition": "目标处于木系缠绕状态时受到火系攻击",
+      "effect": "燃烧伤害×1.5",
+      "visual": "火焰颜色加深"
+    },
+    "water_earth": {
+      "status": "implemented",
+      "condition": "水系攻击命中土行敌人",
+      "effect": "附加2秒20%减速",
+      "visual": "泥沼色效果"
+    },
+    "metal_earth": {
+      "status": "implemented",
+      "condition": "金系附魔命中石傀/Boss",
+      "effect": "伤害×1.3",
+      "visual": "金色裂痕闪光"
+    },
+    "wood_earth": {
+      "status": "reserved",
+      "condition": "木系攻击命中土行敌人",
+      "effect": "短暂缠绕",
+      "visual": "藤蔓线"
+    },
+    "water_fire": {
+      "status": "reserved",
+      "condition": "水系攻击命中燃烧目标",
+      "effect": "蒸汽，降低下一次火伤",
+      "visual": "蒸汽粒子"
+    }
+  },
+  "cultivationStages": {
+    "mortal_touch_qi": {
+      "label": "凡骨末期·初触引气",
+      "reactionPowerScale": 0.25,
+      "enchantMaxDuration": 3.0,
+      "description": "灵气刚被唤醒，附魔短暂，反应轻微"
+    },
+    "qi_guiding": {
+      "label": "引气",
+      "reactionPowerScale": 0.5,
+      "enchantMaxDuration": 5.0,
+      "description": "可稳定附魔，简单反应可控"
+    },
+    "qi_refining": {
+      "label": "炼气",
+      "reactionPowerScale": 0.75,
+      "enchantMaxDuration": 8.0,
+      "description": "可主动组合元素，反应范围扩大"
+    },
+    "foundation": {
+      "label": "筑基",
+      "reactionPowerScale": 1.0,
+      "enchantMaxDuration": 12.0,
+      "description": "元素反应成为战斗核心，可多段连锁"
+    }
+  }
+}

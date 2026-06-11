@@ -1,33 +1,483 @@
+:root {
+  color-scheme: dark;
+  font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+  background: #05080b;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
-  background: #050a12;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(205, 190, 145, 0.1), transparent 34%),
+    linear-gradient(180deg, #0a0d10 0%, #030507 100%);
 }
 
-body {
-  min-width: 100vw;
-  min-height: 100vh;
+button {
+  font: inherit;
 }
 
 #game-root {
   width: 100vw;
   height: 100vh;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(18, 35, 54, 0.55), transparent 55%),
-    #050a12;
 }
 
-canvas {
+.game-shell {
+  width: min(100vw, 177.7778vh);
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background: #0b1114;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.58),
+    inset 0 0 0 1px rgba(232, 210, 138, 0.18);
+}
+
+.game-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-image:
+    linear-gradient(180deg, rgba(9, 12, 14, 0.06), rgba(9, 12, 14, 0.25)),
+    url("/assets/images/background.png");
+  background-size: cover;
+  background-position: center;
+  user-select: none;
+  cursor: crosshair;
+}
+
+.effect-canvas,
+.ui-layer,
+.player-unit,
+.boss-unit {
+  position: absolute;
+}
+
+.effect-canvas {
+  inset: 0;
+  z-index: 6;
+  width: 100%;
+  height: 100%;
   display: block;
-  max-width: 100vw;
-  max-height: 100vh;
-  background: #071525;
+  pointer-events: none;
+  background: transparent;
+}
+
+.player-unit,
+.boss-unit {
+  pointer-events: none;
+  overflow: hidden;
+  transform: translate(-50%, -100%);
+  transform-origin: 50% 100%;
+}
+
+.player-unit {
+  z-index: 4;
+  width: 11.6%;
+  height: 29%;
+  filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48));
+  transition: filter 80ms linear, opacity 80ms linear;
+}
+
+.player-sprite {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 255%;
+  height: auto;
+  transform: translate(-48%, -54%);
+}
+
+.player-unit.invulnerable {
+  filter:
+    drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48))
+    drop-shadow(0 0 12px rgba(232, 210, 138, 0.92));
+  opacity: 0.78;
+}
+
+.boss-unit {
+  z-index: 3;
+  width: 24%;
+  height: 43%;
+  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.62));
+}
+
+.boss-sprite {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 208%;
+  height: auto;
+  transform: translate(-50%, -53%);
+}
+
+.boss-unit.boss-hit {
+  filter:
+    brightness(2.25)
+    saturate(0.35)
+    drop-shadow(0 0 18px rgba(255, 235, 190, 0.95));
+}
+
+.boss-unit.dead {
+  opacity: 0.28;
+  filter: grayscale(1) blur(1px);
+}
+
+.player-unit.light-attack {
+  animation: player-light 180ms ease-out;
+}
+
+.player-unit.heavy-attack {
+  animation: player-heavy 240ms ease-out;
+}
+
+.player-unit.cast-attack {
+  animation: player-cast 240ms ease-out;
+}
+
+.player-unit.dodge-action {
+  animation: player-dodge 240ms ease-out;
+}
+
+.player-unit.heal-action {
+  animation: player-heal 360ms ease-out;
+}
+
+.boss-unit.boss-hurt-pop {
+  animation: boss-hurt 170ms ease-out;
+}
+
+.impact {
+  animation: impact-shake 110ms linear;
+}
+
+.ui-layer {
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-panel,
+.boss-panel,
+.skill-slot,
+.result-panel {
+  background:
+    linear-gradient(180deg, rgba(14, 18, 22, 0.86), rgba(5, 8, 11, 0.76)),
+    radial-gradient(circle at 50% 0%, rgba(232, 210, 138, 0.08), transparent 55%);
+  border: 1px solid rgba(232, 210, 138, 0.62);
+  box-shadow:
+    inset 0 0 18px rgba(0, 0, 0, 0.38),
+    0 8px 22px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(2px);
+}
+
+.status-panel {
+  position: absolute;
+  left: 2%;
+  top: 3.4%;
+  width: 21.5%;
+  min-width: 190px;
+  padding: 10px 12px 12px;
+}
+
+.hud-title {
+  margin-bottom: 8px;
+  color: #ead58f;
+  font-size: clamp(13px, 1.65vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.stat-row {
+  margin-top: 7px;
+}
+
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  color: #dce1e4;
+  font-size: clamp(10px, 1.2vw, 13px);
+}
+
+.stat-track,
+.boss-bar-wrap {
+  position: relative;
+  overflow: hidden;
+  background: rgba(5, 6, 7, 0.78);
+  border: 1px solid rgba(232, 210, 138, 0.28);
+}
+
+.stat-track {
+  height: 7px;
+  margin-top: 3px;
+}
+
+.stat-fill {
+  height: 100%;
+  width: 100%;
+  transition: width 130ms ease-out;
+}
+
+.stat-fill.hp {
+  background: linear-gradient(90deg, #76242b, #d74b49);
+}
+
+.stat-fill.mp {
+  background: linear-gradient(90deg, #28547a, #70b9ff);
+}
+
+.stat-fill.stamina {
+  background: linear-gradient(90deg, #366743, #75d98b);
+}
+
+.heal-line {
+  margin-top: 8px;
+  color: #e5d7aa;
+  font-size: clamp(10px, 1.2vw, 13px);
+}
+
+.boss-panel {
+  position: absolute;
+  left: 50%;
+  top: 2.5%;
+  width: min(48%, 520px);
+  padding: 8px 14px 12px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.trial-title {
+  color: #ead58f;
+  font-size: clamp(18px, 2.35vw, 27px);
+  font-weight: 700;
+  line-height: 1.12;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.68);
+}
+
+.boss-name {
+  margin-top: 5px;
+  color: #d8d2c1;
+  font-size: clamp(10px, 1.25vw, 14px);
+}
+
+.boss-bar-wrap {
+  height: 16px;
+  margin-top: 7px;
+  border-color: rgba(232, 210, 138, 0.72);
+}
+
+.boss-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #7e1d25, #f05245);
+  transition: width 160ms ease-out;
+}
+
+.boss-bar-wrap span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #f8ead0;
+  font-size: clamp(9px, 1vw, 12px);
+  text-shadow: 0 1px 2px #000;
+}
+
+.env-panel {
+  position: absolute;
+  right: 2%;
+  top: 3.4%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  color: #dce1e4;
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+.gear {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: #ead58f;
+  background: rgba(9, 12, 15, 0.72);
+  border: 1px solid rgba(232, 210, 138, 0.52);
+}
+
+.skill-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 3.2%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: min(78%, 760px);
+  transform: translateX(-50%);
+}
+
+.skill-slot {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  min-height: 44px;
+  padding: 5px 8px;
+}
+
+.skill-slot.disabled {
+  opacity: 0.52;
+  filter: grayscale(0.8);
+}
+
+.skill-icon {
+  width: 34px;
+  aspect-ratio: 1;
+  background-image: url("/assets/images/icons.png");
+  background-size: 400% 200%;
+  background-position: var(--icon-pos-x) var(--icon-pos-y);
+  border: 1px solid rgba(232, 210, 138, 0.58);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.52);
+}
+
+.skill-copy {
+  min-width: 0;
+  color: #e7dfc7;
+  line-height: 1.15;
+}
+
+.skill-copy strong {
+  display: block;
+  color: #ead58f;
+  font-size: clamp(10px, 1.05vw, 12px);
+}
+
+.skill-copy span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(10px, 1.1vw, 13px);
+}
+
+.result-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 310px;
+  padding: 24px 34px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.result-title {
+  color: #ead58f;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 700;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.72);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@keyframes impact-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(3px, -2px);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+  }
+  75% {
+    transform: translate(2px, 1px);
+  }
+}
+
+@keyframes player-light {
+  0% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+  42% {
+    transform: translate(calc(-50% + var(--face-x)), calc(-100% + var(--face-y))) scale(1.04);
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@keyframes player-heavy {
+  0% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+  35% {
+    transform: translate(calc(-50% - var(--face-x)), calc(-100% - var(--face-y))) scale(0.96);
+  }
+  72% {
+    transform: translate(calc(-50% + var(--face-x)), calc(-100% + var(--face-y))) scale(1.08);
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@keyframes player-cast {
+  0% {
+    filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48));
+  }
+  50% {
+    filter:
+      drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48))
+      drop-shadow(0 0 22px rgba(255, 225, 142, 0.95));
+    transform: translate(-50%, -100%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@keyframes player-dodge {
+  0% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.42;
+    transform: translate(calc(-50% + var(--face-x)), calc(-100% + var(--face-y))) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@keyframes player-heal {
+  0%,
+  100% {
+    filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48));
+  }
+  45% {
+    filter:
+      drop-shadow(0 12px 12px rgba(0, 0, 0, 0.48))
+      drop-shadow(0 0 24px rgba(115, 222, 142, 0.95));
+  }
+}
+
+@keyframes boss-hurt {
+  0%,
+  100% {
+    transform: translate(-50%, -100%);
+  }
+  35% {
+    transform: translate(-50%, -100%) scale(1.04);
+  }
+  70% {
+    transform: translate(-50%, -100%) scale(0.98);
+  }
 }

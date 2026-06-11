@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { SceneDepth } from '../utils/DepthUtils';
 import type { Damageable, DamageInput } from './CombatTypes';
 
 export type HitboxKind = 'light' | 'heavy';
@@ -23,7 +24,7 @@ export class DamageHitbox extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, private readonly config: DamageHitboxConfig) {
     super(scene, config.x, config.y);
     this.damage = config.damage;
-    this.setDepth(48);
+    this.setDepth(SceneDepth.Effects);
     this.add(this.drawRange());
     scene.add.existing(this);
     this.checkTargets();
